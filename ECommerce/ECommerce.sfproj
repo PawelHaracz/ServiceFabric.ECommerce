@@ -32,6 +32,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ECommerce.API\ECommerce.API.csproj" />
     <ProjectReference Include="..\Ecommerce.ProductCatalog\Ecommerce.ProductCatalog.csproj" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />

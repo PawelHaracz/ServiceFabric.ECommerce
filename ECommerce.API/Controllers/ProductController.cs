@@ -17,8 +17,7 @@ namespace ECommerce.API.Controllers
     {
         private readonly IProductCatalogService _catalogService;
         public ProductController()
-        {
-        
+        {        
             _catalogService = ServiceProxy.Create<IProductCatalogService>(new Uri("fabric:/ECommerce/Ecommerce.ProductCatalog"), new ServicePartitionKey(0L));
         }
         // GET api/values

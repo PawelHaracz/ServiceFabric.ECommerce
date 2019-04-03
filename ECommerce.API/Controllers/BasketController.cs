@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ECommerce.API.EventHandlers;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.ServiceFabric.Actors;
 using Microsoft.ServiceFabric.Actors.Client;
 using UserActor.Interfaces;
-using Microsoft.ServiceFabric.Actors.Client;
 
 namespace ECommerce.API.Controllers
 {
@@ -35,15 +33,15 @@ namespace ECommerce.API.Controllers
         public async Task Add(string userId, [FromBody]ApiBasketAddRequest request)
         {
             var actor = GetActor(userId);
-            await actor.SubscribeAsync<IUserActorEvent>(new UserActorEventHandler());
-            await actor.AddToBasket(request.ProductId, request.Quantity);
+            await actor.SubscribeAsync<IUserActorEvent>(new UserActorEventHandler()).ConfigureAwait(false);
+            await actor.AddToBasket(request.ProductId, request.Quantity).ConfigureAwait(false);
         }
 
         [HttpDelete("{userId}")]
         public async Task Delete(string userId)
         {
             var actor = GetActor(userId);
-            await actor.ClearBasket();
+            await actor.ClearBasket().ConfigureAwait(false);
         }
 
         private IUserActor GetActor(string userId)

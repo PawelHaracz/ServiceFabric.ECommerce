@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace ECommerce.ProductCatalog.Model
 {
     [DataContract]
-    [KnownType("KnownTypes")]
+    //[KnownType("KnownTypes")]
     public class Product
     {
         [DataMember]

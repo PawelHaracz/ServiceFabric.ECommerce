@@ -24,7 +24,7 @@ namespace ECommerce.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<ApiProduct>> Get()
         {
-            var products = await _catalogService.GetAllProducts();
+            var products = await _catalogService.GetAllProducts().ConfigureAwait(false);
             return products.Select(p => new ApiProduct
             {
                 Id = p.Id,
@@ -47,7 +47,7 @@ namespace ECommerce.API.Controllers
                 Price = product.Price,
                 Availability = 100
             };
-            await _catalogService.AddProduct(mappedProduct);
+            await _catalogService.AddProduct(mappedProduct).ConfigureAwait(false);
         }
     }
 }

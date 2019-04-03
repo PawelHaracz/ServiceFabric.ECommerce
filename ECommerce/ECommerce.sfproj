@@ -33,6 +33,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ECommerce.API\ECommerce.API.csproj" />
+    <ProjectReference Include="..\ECommerce.Checkout\ECommerce.Checkout.csproj" />
     <ProjectReference Include="..\Ecommerce.ProductCatalog\Ecommerce.ProductCatalog.csproj" />
     <ProjectReference Include="..\UserActor\UserActor.csproj" />
   </ItemGroup>

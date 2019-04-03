@@ -44,13 +44,12 @@ namespace UserActor
 
         public async Task ClearBasket()
         {
-            IEnumerable<string> productIDs = await StateManager.GetStateNamesAsync();
+            IEnumerable<string> productIDs = await StateManager.GetStateNamesAsync().ConfigureAwait(false);
 
-            foreach (string productId in productIDs)
+            foreach (var productId in productIDs)
             {
-                await StateManager.RemoveStateAsync(productId);
+                await StateManager.RemoveStateAsync(productId).ConfigureAwait(false);
             }
-
         }
 
         public async Task<IDictionary<Guid, int>> GetBasket()
@@ -59,9 +58,9 @@ namespace UserActor
 
             IEnumerable<string> productIDs = await StateManager.GetStateNamesAsync();
 
-            foreach (string productId in productIDs)
+            foreach (var productId in productIDs)
             {
-                int quantity = await StateManager.GetStateAsync<int>(productId);
+                var quantity = await StateManager.GetStateAsync<int>(productId).ConfigureAwait(false);
                 result[new Guid(productId)] = quantity;
             }
 

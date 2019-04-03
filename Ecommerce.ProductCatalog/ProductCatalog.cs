@@ -70,7 +70,7 @@ namespace Ecommerce.ProductCatalog
                 Availability = 30
             };
 
-            await Task.WhenAll(_productRepository.Add(product1), _productRepository.Add(product2), _productRepository.Add(product3));
+            //await Task.WhenAll(_productRepository.Add(product1), _productRepository.Add(product2), _productRepository.Add(product3));
 
             var all = await _productRepository.GetAllProducts();
         }
@@ -84,6 +84,11 @@ namespace Ecommerce.ProductCatalog
         public async Task AddProduct(Product product)
         {
             await _productRepository.Add(product);
+        }
+
+        public async Task<Product> GetProduct(Guid productId)
+        {
+            return await _productRepository.GetProduct(productId);
         }
     }
 }

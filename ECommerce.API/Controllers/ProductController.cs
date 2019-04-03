@@ -17,15 +17,14 @@ namespace ECommerce.API.Controllers
     {
         private readonly IProductCatalogService _catalogService;
         public ProductController()
-        {
-        
+        {        
             _catalogService = ServiceProxy.Create<IProductCatalogService>(new Uri("fabric:/ECommerce/Ecommerce.ProductCatalog"), new ServicePartitionKey(0L));
         }
         // GET api/values
         [HttpGet]
         public async Task<IEnumerable<ApiProduct>> Get()
         {
-            var products = await _catalogService.GetAllProducts();
+            var products = await _catalogService.GetAllProducts().ConfigureAwait(false);
             return products.Select(p => new ApiProduct
             {
                 Id = p.Id,
@@ -48,7 +47,7 @@ namespace ECommerce.API.Controllers
                 Price = product.Price,
                 Availability = 100
             };
-            await _catalogService.AddProduct(mappedProduct);
+            await _catalogService.AddProduct(mappedProduct).ConfigureAwait(false);
         }
     }
 }

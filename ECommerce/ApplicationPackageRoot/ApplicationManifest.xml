@@ -1,15 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApplicationManifest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ApplicationTypeName="ECommerceType" ApplicationTypeVersion="1.0.0" xmlns="http://schemas.microsoft.com/2011/01/fabric">
   <Parameters>
+    <Parameter Name="ECommerce.Checkout_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="ECommerce.Checkout_PartitionCount" DefaultValue="1" />
+    <Parameter Name="ECommerce.Checkout_TargetReplicaSetSize" DefaultValue="3" />
     <Parameter Name="ECommerce.API_ASPNETCORE_ENVIRONMENT" DefaultValue="" />
     <Parameter Name="ECommerce.API_InstanceCount" DefaultValue="-1" />
     <Parameter Name="Ecommerce.ProductCatalog_MinReplicaSetSize" DefaultValue="3" />
     <Parameter Name="Ecommerce.ProductCatalog_PartitionCount" DefaultValue="1" />
     <Parameter Name="Ecommerce.ProductCatalog_TargetReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="UserActorService_PartitionCount" DefaultValue="10" />
+    <Parameter Name="UserActorService_MinReplicaSetSize" DefaultValue="3" />
+    <Parameter Name="UserActorService_TargetReplicaSetSize" DefaultValue="3" />
   </Parameters>
   <!-- Import the ServiceManifest from the ServicePackage. The ServiceManifestName and ServiceManifestVersion 
        should match the Name and Version attributes of the ServiceManifest element defined in the 
        ServiceManifest.xml file. -->
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="ECommerce.CheckoutPkg" ServiceManifestVersion="1.0.0" />
+    <ConfigOverrides />
+  </ServiceManifestImport>
+  <ServiceManifestImport>
+    <ServiceManifestRef ServiceManifestName="UserActorPkg" ServiceManifestVersion="1.0.0" />
+  </ServiceManifestImport>
   <ServiceManifestImport>
     <ServiceManifestRef ServiceManifestName="ECommerce.APIPkg" ServiceManifestVersion="1.0.0" />
     <ConfigOverrides />
@@ -27,6 +40,11 @@
          ServiceFabric PowerShell module.
          
          The attribute ServiceTypeName below must match the name defined in the imported ServiceManifest.xml file. -->
+    <Service Name="ECommerce.Checkout" ServicePackageActivationMode="ExclusiveProcess">
+      <StatefulService ServiceTypeName="ECommerce.CheckoutType" TargetReplicaSetSize="[ECommerce.Checkout_TargetReplicaSetSize]" MinReplicaSetSize="[ECommerce.Checkout_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[ECommerce.Checkout_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
     <Service Name="ECommerce.API" ServicePackageActivationMode="ExclusiveProcess">
       <StatelessService ServiceTypeName="ECommerce.APIType" InstanceCount="[ECommerce.API_InstanceCount]">
         <SingletonPartition />
@@ -35,6 +53,11 @@
     <Service Name="Ecommerce.ProductCatalog" ServicePackageActivationMode="ExclusiveProcess">
       <StatefulService ServiceTypeName="Ecommerce.ProductCatalogType" TargetReplicaSetSize="[Ecommerce.ProductCatalog_TargetReplicaSetSize]" MinReplicaSetSize="[Ecommerce.ProductCatalog_MinReplicaSetSize]">
         <UniformInt64Partition PartitionCount="[Ecommerce.ProductCatalog_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
+      </StatefulService>
+    </Service>
+    <Service Name="UserActorService" GeneratedIdRef="4c695c1b-f3ae-40db-bd3b-ab0e6cdb806e|Persisted">
+      <StatefulService ServiceTypeName="UserActorServiceType" TargetReplicaSetSize="[UserActorService_TargetReplicaSetSize]" MinReplicaSetSize="[UserActorService_MinReplicaSetSize]">
+        <UniformInt64Partition PartitionCount="[UserActorService_PartitionCount]" LowKey="-9223372036854775808" HighKey="9223372036854775807" />
       </StatefulService>
     </Service>
   </DefaultServices>

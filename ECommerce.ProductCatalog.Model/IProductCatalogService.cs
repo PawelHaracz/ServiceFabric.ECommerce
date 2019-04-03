@@ -1,4 +1,5 @@
-﻿using Microsoft.ServiceFabric.Services.Remoting;
+﻿using System;
+using Microsoft.ServiceFabric.Services.Remoting;
 using Microsoft.ServiceFabric.Services.Remoting.FabricTransport;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,5 +11,6 @@ namespace ECommerce.ProductCatalog.Model
     {
         Task<IEnumerable<Product>> GetAllProducts();
         Task AddProduct(Product product);
+        Task<Product> GetProduct(Guid productId);
     }
 }

@@ -33,7 +33,7 @@ namespace ECommerce.ProductCatalog.Model
                     .Where(t => typeof(Product).IsAssignableFrom(t))
                     .ToList();
 
-                list.Add(typeof(List<Product>));
+                //list.Add(typeof(List<Product>));
                 _productTypes = list;
 
             }

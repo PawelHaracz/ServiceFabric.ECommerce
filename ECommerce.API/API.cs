@@ -4,6 +4,7 @@ using System.Fabric;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,8 +51,11 @@ namespace ECommerce.API
                                     })
                                     .ConfigureServices(
                                         services => services
-                                            .AddSingleton<StatelessServiceContext>(serviceContext))
-                                    .UseContentRoot(Directory.GetCurrentDirectory())
+                                            .AddSingleton<StatelessServiceContext>(serviceContext)
+                                            .AddSingleton(new HttpClient())
+                                            .AddSingleton(new FabricClient())
+                                )
+                            .UseContentRoot(Directory.GetCurrentDirectory())
                                     .UseStartup<Startup>()
                                     .UseServiceFabricIntegration(listener, ServiceFabricIntegrationOptions.None)
                                     .UseUrls(url)

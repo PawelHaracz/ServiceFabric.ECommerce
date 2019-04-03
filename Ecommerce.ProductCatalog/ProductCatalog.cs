@@ -31,7 +31,7 @@ namespace Ecommerce.ProductCatalog
         /// </remarks>
         /// <returns>A collection of listeners.</returns>
         protected override IEnumerable<ServiceReplicaListener> CreateServiceReplicaListeners()
-        {               
+        {
             return this.CreateServiceRemotingReplicaListeners();
         }
 
@@ -70,7 +70,7 @@ namespace Ecommerce.ProductCatalog
                 Availability = 30
             };
 
-            //await Task.WhenAll(_productRepository.Add(product1), _productRepository.Add(product2), _productRepository.Add(product3));
+            await Task.WhenAll(_productRepository.Add(product1), _productRepository.Add(product2), _productRepository.Add(product3));
 
             var all = await _productRepository.GetAllProducts();
         }
